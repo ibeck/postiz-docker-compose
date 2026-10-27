@@ -232,11 +232,13 @@ services:
     networks:
       - temporal-network
     healthcheck:
-      test: ["CMD", "temporal", "operator", "cluster", "health", "--address", "temporal:7233"]
+      # Temporal binds to its own container IP (not 127.0.0.1), and the "temporal"
+      # alias can resolve to another network's IP under Coolify, so probe each local IP.
+      test: ["CMD-SHELL", "for ip in $$(hostname -i); do temporal operator cluster health --address $$ip:7233 >/dev/null 2>&1 && exit 0; done; exit 1"]
       interval: 10s
-      timeout: 5s
-      retries: 30
-      start_period: 180s
+      timeout: 10s
+      retries: 18
+      start_period: 90s
     configs:
       - source: temporal-dynamicconfig
         target: /etc/temporal/config/dynamicconfig/development-sql.yaml
