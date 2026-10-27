@@ -161,19 +161,6 @@ services:
       - postiz-redis-data:/data
     networks:
       - postiz-network
-
-  # For Application Monitoring / Debugging
-  spotlight:
-    profiles: [debug]
-    pull_policy: always
-    container_name: spotlight
-    restart: unless-stopped
-    ports:
-      - 127.0.0.1:8969:8969/tcp
-    image: ghcr.io/getsentry/spotlight:latest
-    networks:
-      - postiz-network
-
   # -----------------------
   # Temporal Stack
   # -----------------------
