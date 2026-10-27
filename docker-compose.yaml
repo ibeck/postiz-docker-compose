@@ -239,10 +239,9 @@ services:
       timeout: 5s
       retries: 10
       start_period: 30s
-    volumes:
-      - ./dynamicconfig:/etc/temporal/config/dynamicconfig
-    labels:
-      kompose.volume.type: configMap
+    configs:
+      - source: temporal-dynamicconfig
+        target: /etc/temporal/config/dynamicconfig/development-sql.yaml
 
   temporal-admin-tools:
     container_name: temporal-admin-tools
@@ -279,6 +278,18 @@ services:
     depends_on:
       temporal:
         condition: service_healthy
+
+configs:
+  # Inline instead of a ./dynamicconfig bind mount: Coolify deploys from a helper
+  # container, so relative host paths don't exist and Temporal can't find its config.
+  temporal-dynamicconfig:
+    content: |
+      limit.maxIDLength:
+        - value: 255
+          constraints: {}
+      system.forceSearchAttributesCacheRefreshOnRead:
+        - value: true # Dev setup only. Please don't turn this on in production.
+          constraints: {}
 
 volumes:
   postgres-volume:
