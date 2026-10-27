@@ -212,8 +212,6 @@ services:
   temporal:
     container_name: temporal
     restart: always
-    ports:
-      - '127.0.0.1:7233:7233'
     image: temporalio/auto-setup:1.28.1
     depends_on:
       temporal-postgresql:
@@ -267,8 +265,6 @@ services:
       - TEMPORAL_CORS_ORIGINS=http://127.0.0.1:3000
     networks:
       - temporal-network
-    ports:
-      - '127.0.0.1:8080:8080'
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/healthz"]
       interval: 30s
