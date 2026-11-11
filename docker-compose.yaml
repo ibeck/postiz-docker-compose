@@ -14,7 +14,7 @@ services:
       BACKEND_INTERNAL_URL: 'http://localhost:3000'
       TEMPORAL_ADDRESS: "temporal:7233"
       IS_GENERAL: 'true'
-      DISABLE_REGISTRATION: 'false'
+      DISABLE_REGISTRATION: 'true'
       RUN_CRON: 'true'
 
       # === Storage Settings
@@ -34,8 +34,8 @@ services:
       # === Social Media API Settings
       X_API_KEY: ''
       X_API_SECRET: ''
-      LINKEDIN_CLIENT_ID: ''
-      LINKEDIN_CLIENT_SECRET: ''
+      LINKEDIN_CLIENT_ID: '77q6n7ik1ta2aa'
+      LINKEDIN_CLIENT_SECRET: '${LINKEDIN_CLIENT_SECRET}'
       REDDIT_CLIENT_ID: ''
       REDDIT_CLIENT_SECRET: ''
       GITHUB_CLIENT_ID: ''
